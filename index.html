@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Búsqueda de Exámenes Pasados - Universidad</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f6fa;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: #2d98da;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        main {
+            max-width: 800px;
+            margin: 2rem auto;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+        }
+        input {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            background: #f1f2f6;
+            margin-bottom: 0.5rem;
+            padding: 0.8rem;
+            border-radius: 6px;
+        }
+        .no-results {
+            text-align: center;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Búsqueda de Exámenes Pasados</h1>
+    <p>Universidad XYZ</p>
+</header>
+
+<main>
+    <input type="text" id="search" placeholder="Buscar por curso, año o profesor...">
+    <ul id="results"></ul>
+</main>
+
+<script>
+    // Datos de ejemplo
+    const examenes = [
+        { curso: "Matemáticas I", año: 2022, profesor: "Dr. López" },
+        { curso: "Física II", año: 2021, profesor: "Ing. Pérez" },
+        { curso: "Programación Web", año: 2023, profesor: "Lic. García" },
+        { curso: "Álgebra Lineal", año: 2020, profesor: "Dr. Torres" },
+        { curso: "Bases de Datos", año: 2022, profesor: "MSc. Ramírez" }
+    ];
+
+    const searchInput = document.getElementById("search");
+    const resultsList = document.getElementById("results");
+
+    function mostrarResultados(lista) {
+        resultsList.innerHTML = "";
+        if (lista.length === 0) {
+            resultsList.innerHTML = `<li class="no-results">No se encontraron resultados</li>`;
+            return;
+        }
+        lista.forEach(examen => {
+            const li = document.createElement("li");
+            li.textContent = `${examen.curso} - ${examen.año} - ${examen.profesor}`;
+            resultsList.appendChild(li);
+        });
+    }
+
+    function filtrar() {
+        const query = searchInput.value.toLowerCase();
+        const filtrados = examenes.filter(examen =>
+            examen.curso.toLowerCase().includes(query) ||
+            examen.profesor.toLowerCase().includes(query) ||
+            examen.año.toString().includes(query)
+        );
+        mostrarResultados(filtrados);
+    }
+
+    searchInput.addEventListener("input", filtrar);
+
+    // Mostrar todos al inicio
+    mostrarResultados(examenes);
+</script>
+
+</body>
+</html>
